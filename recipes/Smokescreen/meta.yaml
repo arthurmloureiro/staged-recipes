@@ -1,0 +1,54 @@
+{% set name = "Smokescreen" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/LSSTDESC/Smokescreen/archive/v{{ version }}.tar.gz
+  sha256: 989b44e8b155a2e72f1f0908f4b53697928f7ceeb61a0f7337cf0cb2805baa0d
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.9
+    - hatchling
+    - hatch-vcs
+    - pip
+  run:
+    - python >=3.9
+    - numpy >=1.24.0
+    - scipy >=1.9.0
+    - astropy >=5.2.0
+    - pytest >=7.2.5
+    - argparse >=1.0
+    - sacc >=0.12
+    - pyccl >=3.0.2
+    - jsonargparse >=4.0
+    - pytest-cov
+    - pyccl>3.0s
+    - firecrown >1.7
+
+test:
+  imports:
+    - smokescreen
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/Smokescreen/
+  dev_url: https://github.com/LSSTDESC/Smokescreen
+  summary: 'Smokescreen: DESC Blinding Unified Library. Based on the Muir et al. (2021) data-vector method.'
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - arthurmloureiro
